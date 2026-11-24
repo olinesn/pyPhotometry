@@ -241,7 +241,7 @@ def preprocess_data(
         plt.ylabel("Signal (post bleaching correction)")
         ax2.text(x=0.05, y=0.95, s=f"slope: {slope :.2f}", transform=ax2.transAxes)
         plt.subplot(2, 3, 6)
-        plt.plot(t[: 10 * sampling_rate], signal_norm[: 10 * sampling_rate])
+        plt.plot(t[: int(10 * sampling_rate)], signal_norm[: int(10 * sampling_rate)])
         plt.xlim(0, 10)
         plt.xlabel("Time (seconds)")
         plt.ylabel(f"Processed signal {normalisation}")
@@ -262,7 +262,7 @@ def _fit_exponential(signal, t, sampling_rate):
     """
     max_sig = np.max(signal)
     signal_ds = decimate(signal, int(sampling_rate))
-    t_ds = decimate(t, sampling_rate)
+    t_ds = decimate(t, int(sampling_rate))
     init_params = [max_sig / 2, max_sig / 4, max_sig / 4, 300, 3000]
     bounds = ([0, 0, 0, 60, 600], [max_sig, max_sig, max_sig, 600, 36000])
     try:
